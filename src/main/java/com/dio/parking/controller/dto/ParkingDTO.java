@@ -23,5 +23,5 @@ public class ParkingDTO {
 	private LocalDateTime entryDate;
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime exitDate;
-	private String bill;
+	private Double bill;
 }

@@ -1,6 +1,5 @@
 package com.dio.parking.controller;
 
-import org.apache.http.protocol.HTTP;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
