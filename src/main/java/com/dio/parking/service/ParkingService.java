@@ -16,15 +16,6 @@ import com.dio.parking.models.Parking;
 public class ParkingService {
 	private static Map<String, Parking> parkingMap = new HashMap();
 
-	static {
-		var id = getUUID();
-		var id2 = getUUID();
-		Parking parking = new Parking(id, "ABC-0D12", "SP", "Gol", "vermelho");
-		Parking parking2 = new Parking(id2, "EFG-3H45", "RJ", "Celta", "preto");
-		parkingMap.put(id, parking);
-		parkingMap.put(id2, parking2);
-	}
-
 	public List<Parking> findAll() {
 		return parkingMap.values().stream().collect(Collectors.toList());
 	}
@@ -35,7 +26,7 @@ public class ParkingService {
 
 	public Parking findById(String id) {
 		Parking parking = parkingMap.get(id);
-		
+
 		if (parking == null) {
 			throw new ParkingNotFoundException(id);
 		}
@@ -49,4 +40,21 @@ public class ParkingService {
 		parkingMap.put(uuid, parkingCreate);
 		return parkingCreate;
 	}
+
+	public void delete(String id) {
+		findById(id);
+		parkingMap.remove(id);
+	}
+
+	public Parking update(String id, Parking parkingCreate) {
+		Parking parkingById = findById(id);
+		parkingById.setColor(parkingCreate.getColor());
+		parkingMap.replace(id, parkingById);
+		return parkingById;
+	}
+
+	public Parking exit(String id) {
+		return null;
+	}
+
 }
