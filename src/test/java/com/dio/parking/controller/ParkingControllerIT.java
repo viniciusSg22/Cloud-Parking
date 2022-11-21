@@ -13,7 +13,7 @@ import com.dio.parking.controller.dto.ParkingCreateDTO;
 import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ParkingControllerIT extends AbstractContainerBase{
+public class ParkingControllerIT extends AbstractContainerBase {
 
 	@LocalServerPort
 	private int randomPort;
@@ -25,7 +25,8 @@ public class ParkingControllerIT extends AbstractContainerBase{
 
 	@Test
 	void whenFindAllThenCheckResult() {
-		RestAssured.given().when().get("/parking").then().statusCode(HttpStatus.OK.value());
+		RestAssured.given().header("Authorization", "Basic dXNlcjpkaW9AMTIzNDU2Nzg5").when().get("/parking").then()
+				.statusCode(HttpStatus.OK.value());
 	}
 
 	@Test
@@ -35,8 +36,9 @@ public class ParkingControllerIT extends AbstractContainerBase{
 		createDTO.setLicense("YXW-9Z87");
 		createDTO.setModel("Mercedes");
 		createDTO.setState("CE");
-		RestAssured.given().when().contentType(MediaType.APPLICATION_JSON_VALUE).body(createDTO).post("/parking").then()
-				.statusCode(HttpStatus.CREATED.value()).body("license", Matchers.equalTo("YXW-9Z87"))
-				.body("color", Matchers.equalTo("Roxo"));
+
+		RestAssured.given().auth().basic("user", "dio@123456789").when().contentType(MediaType.APPLICATION_JSON_VALUE)
+				.body(createDTO).post("/parking").then().statusCode(HttpStatus.CREATED.value())
+				.body("license", Matchers.equalTo("YXW-9Z87")).body("color", Matchers.equalTo("Roxo"));
 	}
 }
